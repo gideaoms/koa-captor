@@ -1,7 +1,7 @@
 import Koa, { Context, Next } from 'koa'
 import Router from 'koa-router'
 import Joi from '@hapi/joi'
-import captor from '../src/index'
+import captor from '../lib/index'
 
 const app = new Koa()
 const router = new Router()

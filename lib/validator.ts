@@ -26,30 +26,30 @@ const capture = async ({ response }: Context, next: Next) => {
   }
 }
 
-const body = (schema: ObjectSchema) =>
+const body = (schema?: ObjectSchema) =>
   async ({ request }: Context, next: Next) => {
     if (!schema) {
-      await next()
+      return await next()
     }
 
     request.body = validate(schema)
     await next()
   }
 
-const query = (schema: ObjectSchema) =>
+const query = (schema?: ObjectSchema) =>
   async ({ request }: Context, next: Next) => {
     if (!schema) {
-      await next()
+      return await next()
     }
 
     request.query = validate(schema)
     await next()
   }
 
-const params = (schema: ObjectSchema) =>
+const params = (schema?: ObjectSchema) =>
   async (ctx: Context, next: Next) => {
     if (!schema) {
-      await next()
+      return await next()
     }
 
     ctx.params = validate(ctx.params)
