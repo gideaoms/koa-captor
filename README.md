@@ -60,3 +60,6 @@ handler: ({ request, response }) => {
   return response.code(404)
 }
 ```
+
+## Author
+[Gideão Silva](https://github.com/gideaoms)

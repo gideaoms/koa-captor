@@ -1,9 +1,9 @@
 {
   "name": "koa-captor",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "build/index.js",
   "files": [
-    "build"
+    "build/*"
   ],
   "license": "MIT",
   "author": {
@@ -13,7 +13,6 @@
     "type": "git",
     "url": "git+https://github.com/gideaoms/koa-captor.git"
   },
-  "types": "typings/index.d.ts",
   "keywords": [
     "koa",
     "node",
