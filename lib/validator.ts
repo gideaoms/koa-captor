@@ -52,7 +52,7 @@ const params = (schema?: ObjectSchema) =>
       return await next()
     }
 
-    ctx.params = validate(ctx.params, ctx.params)
+    ctx.params = validate(schema, ctx.params)
     await next()
   }
 
