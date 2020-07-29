@@ -17,18 +17,24 @@ const app = new Koa()
 const router = new Router()
 
 const middleware1 = async (ctx, next) => {
-  console.log('middleware1')
+  console.log('middleware 1')
   await next()
 }
 
 const middleware2 = async (ctx, next) => {
-  console.log('middleware1')
+  console.log('middleware 2')
   await next()
 }
 
-router.get('/', captor({
+router.get('/:name', captor({
   validate: {
     query: Joi.object({
+      age: Joi.string().required()
+    }),
+    body: Joi.object({
+      city: Joi.string().required()
+    }),
+    params: Joi.object({
       name: Joi.string().required()
     })
   },
@@ -37,7 +43,7 @@ router.get('/', captor({
     middleware2
   ],
   handler: ({ request, response }) => {
-    return response.code(201).json({ hi: request.query.name })
+    return response.code(201).json({ hello: "world" })
   }
 }))
 ```
@@ -45,13 +51,13 @@ router.get('/', captor({
 *Other ways to use the handler method:*
 ```js
 handler: ({ request, response }) => {
-  return { hi: request.query.name }
+  return { hello: "world" }
 }
 ```
 
 ```js
 handler: ({ request, response }) => {
-  return response.json({ hi: request.query.name })
+  return response.json({ hello: "world" })
 }
 ```
 
