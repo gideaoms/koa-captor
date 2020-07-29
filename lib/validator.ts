@@ -32,7 +32,7 @@ const body = (schema?: ObjectSchema) =>
       return await next()
     }
 
-    request.body = validate(schema)
+    request.body = validate(schema, request.body)
     await next()
   }
 
@@ -42,7 +42,7 @@ const query = (schema?: ObjectSchema) =>
       return await next()
     }
 
-    request.query = validate(schema)
+    request.query = validate(schema, request.query)
     await next()
   }
 
@@ -52,7 +52,7 @@ const params = (schema?: ObjectSchema) =>
       return await next()
     }
 
-    ctx.params = validate(ctx.params)
+    ctx.params = validate(ctx.params, ctx.params)
     await next()
   }
 
