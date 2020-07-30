@@ -1,15 +1,19 @@
 import { Context, Next } from 'koa'
-import { ValidationError, ObjectSchema } from '@hapi/joi'
+import { ValidationError } from '@hapi/joi'
+import { Validation } from './types'
 
-const validate = (schema: ObjectSchema, data: any = {}) => {
-  const { error, value } = schema.validate(data, { abortEarly: false })
+const validate = ({ type, rules }: Validation) =>
+  async (ctx: Context, next: Next) => {
+    const { error, value } = rules.validate(ctx[type], { abortEarly: false })
 
-  if (error) {
-    throw error
+    if (error) {
+      throw error
+    }
+
+    ctx[type] = value
+
+    await next()
   }
-
-  return value
-}
 
 const capture = async ({ response }: Context, next: Next) => {
   try {
@@ -26,34 +30,4 @@ const capture = async ({ response }: Context, next: Next) => {
   }
 }
 
-const body = (schema?: ObjectSchema) =>
-  async ({ request }: Context, next: Next) => {
-    if (!schema) {
-      return await next()
-    }
-
-    request.body = validate(schema, request.body)
-    await next()
-  }
-
-const query = (schema?: ObjectSchema) =>
-  async ({ request }: Context, next: Next) => {
-    if (!schema) {
-      return await next()
-    }
-
-    request.query = validate(schema, request.query)
-    await next()
-  }
-
-const params = (schema?: ObjectSchema) =>
-  async (ctx: Context, next: Next) => {
-    if (!schema) {
-      return await next()
-    }
-
-    ctx.params = validate(schema, ctx.params)
-    await next()
-  }
-
-export default { capture, body, query, params }
+export default { capture, validate }

@@ -3,12 +3,10 @@ import responder from './responder'
 import validator from './validator'
 import { Opts } from './types'
 
-const captor = ({ validate, middlewares = [], handler }: Opts) =>
+const captor = ({ validations = [], middlewares = [], handler }: Opts) =>
   compose([
     validator.capture,
-    validator.body(validate?.body),
-    validator.query(validate?.query),
-    validator.params(validate?.params),
+    compose(validations.map(validator.validate)),
     compose(middlewares),
     responder,
     handler

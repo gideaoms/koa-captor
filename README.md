@@ -1,7 +1,6 @@
 [![npm version](https://img.shields.io/npm/v/koa-captor.svg?style=flat)](https://www.npmjs.com/package/koa-captor)
 
 # koa-captor
-*Inspired by [Hapi](https://hapi.dev/)*
 
 ## Installation
 ```bash
@@ -29,17 +28,30 @@ const middleware2 = async (ctx, next) => {
 }
 
 router.get('/:name', captor({
-  validate: {
-    query: Joi.object({
-      age: Joi.string().required()
-    }),
-    body: Joi.object({
-      city: Joi.string().required()
-    }),
-    params: Joi.object({
+  validations: [{
+    type: 'request.body',
+    rules: Joi.object({
       name: Joi.string().required()
     })
-  },
+  }, {
+    type: 'request.query',
+    rules: Joi.object({
+      name: Joi.string().required()
+    })
+  }, {
+    type: 'params',
+    rules: Joi.object({
+      name: Joi.string().required()
+    })
+  }, {
+    type: 'request.files',
+    rules: Joi.object({
+      pictures: Joi.array()
+        .min(1)
+        .max(5)
+        .required(),
+    })
+  }],
   middlewares: [
     middleware1,
     middleware2
