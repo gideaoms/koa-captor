@@ -11,10 +11,11 @@ declare module 'koa' {
   }
 }
 
-export type Validation = {
-  type: 'request.body' | 'request.query' | 'request.files' | 'request.file' | 'params'
-  rules?: ObjectSchema
-}
+export type Validation = 'body'
+  | 'query'
+  | 'files'
+  | 'file'
+  | 'params'
 
 export type Opts = {
   validations?: {
