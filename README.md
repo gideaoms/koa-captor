@@ -1,4 +1,4 @@
-[![npm version](https://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/koa-captor)
+[![npm version](https://img.shields.io/npm/v/koa-captor.svg?style=flat)](https://www.npmjs.com/package/koa-captor)
 
 # koa-captor
 *Inspired by [Hapi](https://hapi.dev/)*
