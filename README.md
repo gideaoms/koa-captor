@@ -29,27 +29,9 @@ const middleware2 = async (ctx, next) => {
 
 router.get('/:name', captor({
   validations: [{
-    type: 'request.body',
+    type: 'request.body', // or request.query or params or request.files or request.file
     rules: Joi.object({
       name: Joi.string().required()
-    })
-  }, {
-    type: 'request.query',
-    rules: Joi.object({
-      name: Joi.string().required()
-    })
-  }, {
-    type: 'params',
-    rules: Joi.object({
-      name: Joi.string().required()
-    })
-  }, {
-    type: 'request.files',
-    rules: Joi.object({
-      pictures: Joi.array()
-        .min(1)
-        .max(5)
-        .required(),
     })
   }],
   middlewares: [

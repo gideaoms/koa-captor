@@ -1,9 +1,13 @@
 import { Context, Next } from 'koa'
-import { ValidationError } from '@hapi/joi'
+import { ValidationError, ObjectSchema } from '@hapi/joi'
 import { Validation } from './types'
 
 const validate = ({ type, rules }: Validation) =>
   async (ctx: Context, next: Next) => {
+    if (!rules) {
+      return await next()
+    }
+
     const { error, value } = rules.validate(ctx[type], { abortEarly: false })
 
     if (error) {
@@ -30,4 +34,14 @@ const capture = async ({ response }: Context, next: Next) => {
   }
 }
 
-export default { capture, validate }
+const body = (body?: ObjectSchema) => validate({ type: 'request.body', rules: body })
+
+const query = (query?: ObjectSchema) => validate({ type: 'request.query', rules: query })
+
+const params = (params?: ObjectSchema) => validate({ type: 'params', rules: params })
+
+const files = (files?: ObjectSchema) => validate({ type: 'request.files', rules: files })
+
+const file = (file?: ObjectSchema) => validate({ type: 'request.file', rules: file })
+
+export default { capture, body, query, params, files, file }
