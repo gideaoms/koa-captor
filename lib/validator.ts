@@ -1,9 +1,13 @@
 import { Context, Next } from 'koa'
-import Joi, { ValidationError } from '@hapi/joi'
+import { ValidationError, ObjectSchema } from '@hapi/joi'
 import { Validations } from './types'
 
-const test = (rules = Joi.object(), data = {}) => {
-  const { error, value } = rules.validate(data, { abortEarly: false })
+const test = (rules?: ObjectSchema, data?: any) => {
+  if (!rules) {
+    return data
+  }
+
+  const { error, value } = rules.validate(data || {}, { abortEarly: false })
 
   if (error) {
     throw error
