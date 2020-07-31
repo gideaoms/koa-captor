@@ -11,20 +11,16 @@ declare module 'koa' {
   }
 }
 
-export type Validation = 'body'
-  | 'query'
-  | 'files'
-  | 'file'
-  | 'params'
+export type Validations = {
+  body?: ObjectSchema
+  query?: ObjectSchema
+  files?: ObjectSchema
+  file?: ObjectSchema
+  params?: ObjectSchema
+}
 
 export type Opts = {
-  validations?: {
-    body?: ObjectSchema
-    query?: ObjectSchema
-    files?: ObjectSchema
-    file?: ObjectSchema
-    params?: ObjectSchema
-  },
+  validations?: Validations,
   middlewares?: Middleware[]
   handler: Middleware,
 }
