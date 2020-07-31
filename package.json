@@ -1,6 +1,6 @@
 {
   "name": "koa-captor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "build/index.js",
   "files": [
     "build/*"
